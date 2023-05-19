@@ -16,5 +16,5 @@ export function Button({ small, gray, className = "", ...props }: ButtonProps) {
     : "bg-blue-500 hover:bg-blue-400 focus-visible:bg-blue-400";
 
   return <button className={`rounded-full transition-colors duration-200 disabled:cursor-not-allowed diabled:opacity-50
-  text-white ${sizeClasses} ${colorClasses} ${className}`} {...props}>Tweet</button>;
+  text-white ${sizeClasses} ${colorClasses} ${className}`} {...props}></button>;
 }
