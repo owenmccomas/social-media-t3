@@ -43,22 +43,23 @@ export const profileRouter = createTRPCRouter({
         where: { id: userId, follows: { some: { id: currentUserId } } },
       });
 
-      let addedFollow: boolean
+      let addedFollow: boolean;
       if (existingFollow == null) {
         await ctx.prisma.user.update({
           where: { id: userId },
           data: { follows: { connect: { id: currentUserId } } },
         });
-        addedFollow = true
+        addedFollow = true;
       } else {
         await ctx.prisma.user.update({
           where: { id: userId },
           data: { follows: { connect: { id: currentUserId } } },
         });
-        addedFollow = false
+        addedFollow = false;
       }
 
-
+      void ctx.revalidateSSG?.(`/profile/${userId}`)
+      void ctx.revalidateSSG?.(`/profile/${currentUserId}`)
 
       return { addedFollow };
     }),
