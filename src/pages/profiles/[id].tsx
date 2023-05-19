@@ -24,22 +24,21 @@ const ProfilePage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
     { userId: id },
     { getNextPageParam: (lastPage) => lastPage.nextCursor }
   );
-  const trpcUtils = api.useContext()
-  const toggleFollow = api.profile.toggleFollow.useMutation({ 
+  const trpcUtils = api.useContext();
+  const toggleFollow = api.profile.toggleFollow.useMutation({
     onSuccess: ({ addedFollow }) => {
-        trpcUtils.profile.getById.setData({ id }, (oldData) => {
-            if (oldData == null) return oldData
+      trpcUtils.profile.getById.setData({ id }, (oldData) => {
+        if (oldData == null) return oldData;
 
-
-            const countModifier = addedFollow ? 1 : -1
-            return {
-                ...oldData,
-                isFollowing: addedFollow,
-                followersCount: oldData.followersCount + countModifier
-            }
-        })
-  },
-});
+        const countModifier = addedFollow ? 1 : -1;
+        return {
+          ...oldData,
+          isFollowing: addedFollow,
+          followersCount: oldData.followersCount + countModifier,
+        };
+      });
+    },
+  });
 
   if (profile == null || profile.name == null) {
     return <ErrorPage statusCode={404} />;
@@ -98,15 +97,17 @@ function FollowButton({
   isLoading: boolean;
   onClick: () => void;
 }) {
-    const session = useSession()
+  const session = useSession();
 
-    if (session.status !== "authenticated" || session.data.user.id === userId) {
-        return null;
-    }
+  if (session.status !== "authenticated" || session.data.user.id === userId) {
+    return null;
+  }
 
-  return <Button disabled={isLoading} onClick={onClick} small gray={isFollowing}>
-    {isFollowing ? "Unfollow" : "Follow"}
-  </Button>
+  return (
+    <Button disabled={isLoading} onClick={onClick} small gray={isFollowing}>
+      {isFollowing ? "Unfollow" : "Follow"}
+    </Button>
+  );
 }
 
 const pluralRules = new Intl.PluralRules();
