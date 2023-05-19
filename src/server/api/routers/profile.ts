@@ -3,7 +3,6 @@ import {
   createTRPCRouter,
   publicProcedure,
   protectedProcedure,
-  createTRPCContext,
 } from "~/server/api/trpc";
 
 export const profileRouter = createTRPCRouter({
@@ -59,7 +58,7 @@ export const profileRouter = createTRPCRouter({
         addedFollow = false
       }
 
-      
+
 
       return { addedFollow };
     }),

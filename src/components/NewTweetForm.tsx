@@ -2,21 +2,19 @@ import { useSession } from "next-auth/react";
 import { Button } from "./Button";
 import { ProfileImage } from "./ProfileImage";
 import {
-    FormEvent,
+  type FormEvent,
   useCallback,
-  useEffect,
   useLayoutEffect,
   useRef,
   useState,
 } from "react";
-import { text } from "stream/consumers";
 import { api } from "~/utils/api";
 
 function updateTextAreaSize(textArea?: HTMLTextAreaElement) {
   if (textArea == null) return;
   textArea.style.height = "0px";
   const scrollHeight = textArea.scrollHeight;
-  textArea.style.height = scrollHeight + "px";
+  textArea.style.height = `${scrollHeight}px`;
 }
 
 export function NewTweetForm() {
